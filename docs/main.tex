@@ -35,5 +35,74 @@
 
 
 \section{Cel projektuu}
+\section{Wprowadzenie}
+Action Language AL to język formalny służący do modelowania systemów dynamicznych. Pozwala na reprezentację akcji, ich efektów oraz zależności czasowych pomiędzy nimi. AL zakłada liniowy model czasu i umożliwia analizę konsekwencji wykonywanych działań.
+
+\section{Podstawowe Założenia}
+\begin{itemize}
+    \item Prawo inercji
+    \item Model czasu jest liniowy i dyskretny
+    \item Akcje mają określony czas działania; podczas ich wykonywania wartości fluentów zmienianych przez te akcje są nieznane.
+    \item Dynamiczne efekty akcji - jedna akcja może wywołać kolejną
+    \item Sytuacja może wyzwalać akcje – niektóre stany mogą powodować wykonanie pewnych akcji.
+\end{itemize}
+
+Język AL spełnia powyższe założenia oraz dodatkowo zakłada, że każda akcja jest wykonywana w 1 jednostce czasu. W ramach projektu zostanie zaimplementowany język AL z dodatkowym założeniem o dowolnej długości czasu akcji. W następnych sekcjach zostanie opisana skłania AL.
+
+\section{Składnia AL}
+
+\subsection{Podstawowe elementy}
+\begin{itemize}
+    \item $F$ – zbiór fluentów, czyli zmiennych opisujących stan świata.
+    \item $Ac$ – zbiór akcji, które mogą być wykonywane.
+    \item Formuły logiczne – zdania określające warunki i efekty akcji.
+\end{itemize}
+
+\subsection{Rodzaje zdań w AL}
+
+W podstawowym języku AL wyróżnione są różne rodzaje zdań. Poniżej zostaną przedstawione przykładowe zdania oraz ich zapis w języku AL.
+\begin{itemize}
+    \item Gdy akcja A znajdzie się w stanie spełniający $\pi$, prowadzi do stanu spełniający $\alpha$
+    \begin{equation}
+     A \text{ causes } \alpha \text{ if } \pi
+    \end{equation}
+
+    \item Akcja A powoduje wykonanie akcji B po d chwilach czasu od zakończenia A, gdy zachodzi stan spełniający $\pi$
+    \begin{equation}
+        A \text{ invokes } B \text{ after } d \text{ if } \pi
+    \end{equation}
+
+    \item Gdy akcja A znajdzie się w stanie spełniającym $\pi$ po jej wykonaniu wartość fluentu może, ale nie musi się zmienić
+    \begin{equation}
+        A \text{ releases } f \text{ if } \pi
+    \end{equation}
+
+    \item Gdy spełniony jest warunek $\pi$, akcja $A$ jest wykonywana.
+    \begin{equation}
+        \pi \text{ triggers } A
+    \end{equation}
+\end{itemize}
+
+\subsection{AL + durations} 
+\begin{itemize}
+    \item W czasie 2 jednostek czasu akcja A wywoła $\alpha$
+    \begin{equation}
+        A \text{ causes } \alpha \text{ during 2} 
+    \end{equation}
+\end{itemize}
+
+\section{Semantyka Action Language AL}
+Model AL to struktura:
+\begin{equation}
+    S = (H, O, E)
+\end{equation}
+Gdzie:
+\begin{itemize}
+    \item $H$ – funkcja historii stanów,
+    \item $O$ – funkcja occlusion (określa, które fluenty mogą się zmieniać w wyniku akcji),
+    \item $E$ – relacja określająca wystąpienia akcji.
+\end{itemize}
+
+
 
 \end{document}
