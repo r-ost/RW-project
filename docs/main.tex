@@ -9,11 +9,13 @@
 \usepackage{array}
 \usepackage{enumitem}
 \usepackage{makecell}
+\usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage[colorlinks=true, linkcolor=black]{hyperref}
 
 
-% TODO: zmienic czcionke na bezszeryfowa np. Arial
+
 \renewcommand{\familydefault}{\sfdefault}
 
 \usepackage{listings}
@@ -22,19 +24,22 @@
 % Replace `letterpaper' with `a4paper' for UK/EU standard size
 \usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
-% Useful packages
-\usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage[colorlinks=true, allcolors=blue]{hyperref}
 
 \title{Reprezentacja wiedzy}
 \author{ąą, bb, cc, ąsdęaaaeec}
 
 \begin{document}
 \maketitle
+\tableofcontents
 
+\section{Cel projektu}
+Celem projektu jest stworzenie aplikacji do definiowania i analizy systemów dynamicznych należących do pewnej klasy, będącej rozszerzeniem klasy systemów dynamicznych opisywanych językiem $\mathcal{AL}$.
+Rozszerzenie to polega na dodaniu warunków o dowolnej długości czasu trwania akcji. W ramach projektu zostaną opracowane i zaimplementowane:
+\begin{itemize}
+	\item język akcji, który pozwoli na definiowanie scenariuszy systemów dynamicznych,
+	\item język kwerend, który pozwoli na zadawanie pytań do zdefiniowanego scenariusza.
+\end{itemize}	
 
-\section{Cel projektuu}
 \section{Wprowadzenie}
 Action Language AL to język formalny służący do modelowania systemów dynamicznych. Pozwala na reprezentację akcji, ich efektów oraz zależności czasowych pomiędzy nimi. AL zakłada liniowy model czasu i umożliwia analizę konsekwencji wykonywanych działań.
 
@@ -102,6 +107,11 @@ Gdzie:
     \item $O$ – funkcja occlusion (określa, które fluenty mogą się zmieniać w wyniku akcji),
     \item $E$ – relacja określająca wystąpienia akcji.
 \end{itemize}
+
+\section{Język akcji}
+
+\subsection{Opis}
+
 
 \section{Język kwerend}
 
