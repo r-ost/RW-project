@@ -12,18 +12,13 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{listings}
 \usepackage[colorlinks=true, linkcolor=black]{hyperref}
-
-
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
 \renewcommand{\familydefault}{\sfdefault}
 
-\usepackage{listings}
-
-% Set page size and margins
-% Replace `letterpaper' with `a4paper' for UK/EU standard size
-\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
-
+\setcounter{tocdepth}{2}
 
 \title{Reprezentacja wiedzy}
 \author{ąą, bb, cc, ąsdęaaaeec}
@@ -31,6 +26,8 @@
 \begin{document}
 \maketitle
 \tableofcontents
+
+\newpage
 
 \section{Cel projektu}
 Celem projektu jest stworzenie aplikacji do definiowania i analizy systemów dynamicznych należących do pewnej klasy, będącej rozszerzeniem klasy systemów dynamicznych opisywanych językiem $\mathcal{AL}$.
@@ -40,10 +37,13 @@ Rozszerzenie to polega na dodaniu warunków o dowolnej długości czasu trwania 
 	\item język kwerend, który pozwoli na zadawanie pytań do zdefiniowanego scenariusza.
 \end{itemize}	
 
-\section{Wprowadzenie}
+
+\section{Język akcji}
+
+\subsection{Opis języka $\mathcal{AL}$}
 Action Language AL to język formalny służący do modelowania systemów dynamicznych. Pozwala na reprezentację akcji, ich efektów oraz zależności czasowych pomiędzy nimi. AL zakłada liniowy model czasu i umożliwia analizę konsekwencji wykonywanych działań.
 
-\section{Podstawowe Założenia}
+\subsubsection{Podstawowe Założenia}
 \begin{itemize}
     \item Prawo inercji
     \item Model czasu jest liniowy i dyskretny
@@ -54,18 +54,16 @@ Action Language AL to język formalny służący do modelowania systemów dynami
 
 Język AL spełnia powyższe założenia oraz dodatkowo zakłada, że każda akcja jest wykonywana w 1 jednostce czasu. W ramach projektu zostanie zaimplementowany język AL z dodatkowym założeniem o dowolnej długości czasu akcji. W następnych sekcjach zostanie opisana skłania AL.
 
-\section{Składnia AL}
+\subsubsection{Składnia języka $\mathcal{AL}$}
 
-\subsection{Podstawowe elementy}
+Podstawowe elementy języka $\mathcal{AL}$ to:
 \begin{itemize}
     \item $F$ – zbiór fluentów, czyli zmiennych opisujących stan świata.
     \item $Ac$ – zbiór akcji, które mogą być wykonywane.
     \item Formuły logiczne – zdania określające warunki i efekty akcji.
 \end{itemize}
 
-\subsection{Rodzaje zdań w AL}
-
-W podstawowym języku AL wyróżnione są różne rodzaje zdań. Poniżej zostaną przedstawione przykładowe zdania oraz ich zapis w języku AL.
+\noindent W podstawowym języku $\mathcal{AL}$ wyróżnione są różne rodzaje zdań. Poniżej zostaną przedstawione przykładowe zdania oraz ich zapis w języku $\mathcal{AL}$.
 \begin{itemize}
     \item Gdy akcja A znajdzie się w stanie spełniający $\pi$, prowadzi do stanu spełniający $\alpha$
     \begin{equation}
@@ -88,15 +86,7 @@ W podstawowym języku AL wyróżnione są różne rodzaje zdań. Poniżej zostan
     \end{equation}
 \end{itemize}
 
-\subsection{AL + durations} 
-\begin{itemize}
-    \item W czasie 2 jednostek czasu akcja A wywoła $\alpha$
-    \begin{equation}
-        A \text{ causes } \alpha \text{ during 2} 
-    \end{equation}
-\end{itemize}
-
-\section{Semantyka Action Language AL}
+\subsubsection{Semantyka języka $\mathcal{AL}$}
 Model AL to struktura:
 \begin{equation}
     S = (H, O, E)
@@ -108,10 +98,13 @@ Gdzie:
     \item $E$ – relacja określająca wystąpienia akcji.
 \end{itemize}
 
-\section{Język akcji}
-
-\subsection{Opis}
-
+\subsection{Rozszerzenie języka $\mathcal{AL}$ o durations}
+\begin{itemize}
+    \item W czasie 2 jednostek czasu akcja A wywoła $\alpha$
+    \begin{equation}
+        A \text{ causes } \alpha \text{ during 2} 
+    \end{equation}
+\end{itemize}
 
 \section{Język kwerend}
 
@@ -149,5 +142,12 @@ Przyjmuje się, że:
     \item $Possibly\ \gamma\ at\ t\ when\ Sc$ – zapytanie, czy w chwili $t$ realizacji scenariusza $Sc$ warunek $\gamma$ zachodzi kiedykolwiek.
 \end{itemize}
 
+\section{Przykłady}
+% TODO: Piotr
+
+\section{Interfejs użytkownika}
+% TODO: Jan K.
+
+\section{Bibliografia}
 
 \end{document}
