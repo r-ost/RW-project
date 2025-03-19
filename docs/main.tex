@@ -20,7 +20,7 @@
 
 \setcounter{tocdepth}{2}
 
-\title{Reprezentacja wiedzy}
+\title{Projekt 2: Scenariusze działań \\ \large{Dokumentacja wstępna}}
 \author{ąą, bb, cc, ąsdęaaaeec}
 
 \begin{document}
@@ -41,18 +41,18 @@ Rozszerzenie to polega na dodaniu warunków o dowolnej długości czasu trwania 
 \section{Język akcji}
 
 \subsection{Opis języka $\mathcal{AL}$}
-Action Language AL to język formalny służący do modelowania systemów dynamicznych. Pozwala na reprezentację akcji, ich efektów oraz zależności czasowych pomiędzy nimi. AL zakłada liniowy model czasu i umożliwia analizę konsekwencji wykonywanych działań.
+Action Language $\mathcal{AL}$ to język formalny służący do modelowania systemów dynamicznych. Pozwala na reprezentację akcji, ich efektów oraz zależności czasowych pomiędzy nimi. $\mathcal{AL}$ zakłada liniowy model czasu i umożliwia analizę konsekwencji wykonywanych działań.
 
-\subsubsection{Podstawowe Założenia}
+\subsubsection{Podstawowe założenia}
 \begin{itemize}
     \item Prawo inercji
     \item Model czasu jest liniowy i dyskretny
     \item Akcje mają określony czas działania; podczas ich wykonywania wartości fluentów zmienianych przez te akcje są nieznane.
-    \item Dynamiczne efekty akcji - jedna akcja może wywołać kolejną
+    \item Dynamiczne efekty akcji - jedna akcja może wywołać kolejną po upływie pewnego czasu od jej zakończenia.
     \item Sytuacja może wyzwalać akcje – niektóre stany mogą powodować wykonanie pewnych akcji.
 \end{itemize}
 
-Język AL spełnia powyższe założenia oraz dodatkowo zakłada, że każda akcja jest wykonywana w 1 jednostce czasu. W ramach projektu zostanie zaimplementowany język AL z dodatkowym założeniem o dowolnej długości czasu akcji. W następnych sekcjach zostanie opisana skłania AL.
+\noindent Język $\mathcal{AL}$ spełnia powyższe założenia oraz dodatkowo zakłada, że każda akcja jest wykonywana w 1 jednostce czasu. W ramach projektu zostanie zaimplementowany język $\mathcal{AL}$ z dodatkowym założeniem o dowolnej długości czasu akcji. W następnych sekcjach zostanie opisana składnia $\mathcal{AL}$.
 
 \subsubsection{Składnia języka $\mathcal{AL}$}
 
@@ -63,19 +63,19 @@ Podstawowe elementy języka $\mathcal{AL}$ to:
     \item Formuły logiczne – zdania określające warunki i efekty akcji.
 \end{itemize}
 
-\noindent W podstawowym języku $\mathcal{AL}$ wyróżnione są różne rodzaje zdań. Poniżej zostaną przedstawione przykładowe zdania oraz ich zapis w języku $\mathcal{AL}$.
+\noindent W podstawowym języku $\mathcal{AL}$ wyróżnione są różne rodzaje zdań. Poniżej zostaną przedstawione możliwe zdania oraz ich zapis w języku $\mathcal{AL}$.
 \begin{itemize}
-    \item Gdy akcja A znajdzie się w stanie spełniający $\pi$, prowadzi do stanu spełniający $\alpha$
+    \item Gdy akcja $A$ znajdzie się w stanie spełniającym $\pi$, prowadzi do stanu spełniającego $\alpha$
     \begin{equation}
      A \text{ causes } \alpha \text{ if } \pi
     \end{equation}
 
-    \item Akcja A powoduje wykonanie akcji B po d chwilach czasu od zakończenia A, gdy zachodzi stan spełniający $\pi$
+    \item Akcja $A$ powoduje wykonanie akcji $B$ po $t$ chwilach czasu od zakończenia $A$, gdy zachodzi stan spełniający $\pi$
     \begin{equation}
-        A \text{ invokes } B \text{ after } d \text{ if } \pi
+        A \text{ invokes } B \text{ after } t \text{ if } \pi
     \end{equation}
 
-    \item Gdy akcja A znajdzie się w stanie spełniającym $\pi$ po jej wykonaniu wartość fluentu może, ale nie musi się zmienić
+    \item Gdy akcja $A$ znajdzie się w stanie spełniającym $\pi$ po jej wykonaniu wartość fluentu może, ale nie musi się zmienić
     \begin{equation}
         A \text{ releases } f \text{ if } \pi
     \end{equation}
@@ -87,10 +87,8 @@ Podstawowe elementy języka $\mathcal{AL}$ to:
 \end{itemize}
 
 \subsubsection{Semantyka języka $\mathcal{AL}$}
-Model AL to struktura:
-\begin{equation}
-    S = (H, O, E)
-\end{equation}
+Model $\mathcal{AL}$ to struktura:
+$$S = (H, O, E)$$
 Gdzie:
 \begin{itemize}
     \item $H$ – funkcja historii stanów,
@@ -99,18 +97,51 @@ Gdzie:
 \end{itemize}
 
 \subsection{Rozszerzenie języka $\mathcal{AL}$ o durations}
+
+Poza podstawowymi założeniami zdefiniowanymi w sekcji \ref{sec:opis-jezyka-al}, język akcji zaimplementowany w ramach projektu będzie zawierał dodatkowe założenie o czasie trwania akcji. Każda akcja będzie opisana parą $(A, d)$, gdzie $A$ to nazwa akcja, a $d$ to czas trwania akcji.
+\\ \\
+Rozszerzony język akcji będzie dawał również możliwość zdefiniowania zdań o niemożliwości wykonania akcji w danym punkcie czasu albo przy zajściu pewnego warunku logicznego. 
+\\ \\
+Poniżej zostaną przedstawione możliwe zdania oraz ich zapis w w rozszerzonym języku $\mathcal{AL}$ o durations.
 \begin{itemize}
-    \item W czasie 2 jednostek czasu akcja A wywoła $\alpha$
+    \item Gdy akcja $A$ o czasie trwania $d$ znajdzie się w stanie spełniającym $\pi$, prowadzi do stanu spełniającego $\alpha$
     \begin{equation}
-        A \text{ causes } \alpha \text{ during 2} 
+     	(A, d) \text{ causes } \alpha \text{ if } \pi
     \end{equation}
+
+    \item Akcja $A$ o czasie trwania $d_1$ powoduje wykonanie akcji $B$ (o czasie trwania $d_2$) po $t$ chwilach czasu od zakończenia $A$, gdy zachodzi stan spełniający $\pi$
+    \begin{equation}
+    	(A, d_1) \text{ invokes } (B, d_2) \text{ after } t \text{ if } \pi
+    \end{equation}
+
+    \item Gdy akcja $A$ o czasie trwania $d$ znajdzie się w stanie spełniającym $\pi$ po jej wykonaniu wartość fluentu może, ale nie musi się zmienić
+    \begin{equation}
+        (A, d) \text{ releases } f \text{ if } \pi
+    \end{equation}
+
+    \item Gdy spełniony jest warunek $\pi$, akcja $A$ o czasie trwania $d$ jest wykonywana.
+    \begin{equation}
+        \pi \text{ triggers } (A, d)
+    \end{equation}
+
+	\item Akcja $A$ o czasie trwania $d$ nie może być wykonana w chwili $t$.
+    \begin{equation}
+		\text{impossible } (A, d) \text{ at } t
+    \end{equation}
+
+	\item Akcja $A$ o czasie trwania $d$ nie może być wykonana, gdy spełniony jest warunek $\pi$.
+	\begin{equation}
+		\text{impossible } (A, d) \text{ if } \pi
+	\end{equation}
 \end{itemize}
+
+\section{Scenariusze działań}
+
 
 \section{Język kwerend}
 
 \subsection{Opis}
 Język kwerend pozwala na zadawanie pytań w danej klasie systemów dynamicznych. Kwerenda to zdanie logiczne. Mówimy, że kwerenda jest spełniona, gdy przyjmuje wartość prawdziwą.
-
 
 W ramach projektu zostanie zaimplementowany język kwerend, który pozwoli na uzyskanie odpowiedzi na następujące pytania:
 \begin{itemize}
