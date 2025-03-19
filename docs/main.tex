@@ -103,6 +103,41 @@ Gdzie:
     \item $E$ – relacja określająca wystąpienia akcji.
 \end{itemize}
 
+\section{Język kwerend}
+
+\subsection{Opis}
+Język kwerend pozwala na zadawanie pytań w danej klasie systemów dynamicznych. Kwerenda to zdanie logiczne. Mówimy, że kwerenda jest spełniona, gdy przyjmuje wartość prawdziwą.
+
+
+W ramach projektu zostanie zaimplementowany język kwerend, który pozwoli na uzyskanie odpowiedzi na następujące pytania:
+\begin{itemize}
+    \item \textbf{Czy scenariusz $Sc$ jest możliwy do realizacji?}\\
+    Scenariusz $Sc$ jest możliwy do realizacji, jeśli istnieje dla niego model w zadanej dziedzinie.
+    \item \textbf{Czy w chwili $t$ realizacji scenariusza $Sc$ zawsze/kiedykolwiek wykonywana jest akcja $A$?}\\
+    Przyjmuje się, że akcja $A$ jest wykonywana w chwilach $t_0+1$, $t_0+2$, \ldots, $t_0+d$,\\
+    gdzie $t_0$ to początek trwania akcji, a $d$ to długość jej trwania.\\
+    Akcja $A$ jest wykonywana zawsze, jeśli jest wykonywana w chwili $t$ realizacji scenariusza $Sc$ w każdym możliwym modelu.\\
+    Akcja $A$ jest wykonywana kiedykolwiek, jeśli istnieje model, w którym jest wykonywana w chwili $t$ realizacji scenariusza $Sc$.
+    \item \textbf{Czy w chwili $t \ge 0$ realizacji scenariusza $Sc$ warunek $\gamma$ zachodzi zawsze/kiedykolwiek?}\\
+    Warunek $\gamma$ zachodzi zawsze, jeśli jest spełniony w chwili $t$ realizacji scenariusza $Sc$ w każdym możliwym modelu.\\
+    Warunek $\gamma$ zachodzi kiedykolwiek, jeśli istnieje model, w którym jest spełniony w chwili $t$ realizacji scenariusza $Sc$.
+\end{itemize}
+
+\subsection{Dodatkowe założenia}
+Przyjmuje się, że:
+\begin{itemize}
+    \item Akcje nie mogą zaczynać się w czasie $t < 0$. Zapytania o stan systemu sprzed chwili $t = 0$ są uznawane za niepoprawne. Ponadto warto zauważyć, że akcje mogą rozpoczynać się w chwili $t = 0$, jednak żadna akcja nie może być wykonywana w chwili $t = 0$.
+    \item Od momentu zakończenia ostatniej akcji, stan systemu pozostaje niezmieniony. Zapytanie o stan dla danego scenariusza $Sc$ i modelu $M$ w chwili $t > t_{end}$, gdzie $t_{end}$ - moment zakończenia ostatniej akcji, jest równoważne z zapytaniem o stan w chwili $t_{end}$.
+\end{itemize}
+
+\subsection{Składnia języka kwerend}
+\begin{itemize}
+    \item $Possibly\ Sc$ – zapytanie o możliwość realizacji scenariusza $Sc$.
+    \item $Always\ A\ at\ t\ when\ Sc$ – zapytanie, czy w chwili $t$ realizacji scenariusza $Sc$ zawsze wykonywana jest akcja $A$.
+    \item $Possibly\ A\ at\ t\ when\ Sc$ – zapytanie, czy w chwili $t$ realizacji scenariusza $Sc$ kiedykolwiek wykonywana jest akcja $A$.
+    \item $Always\ \gamma\ at\ t\ when\ Sc$ – zapytanie, czy w chwili $t$ realizacji scenariusza $Sc$ warunek $\gamma$ zachodzi zawsze.
+    \item $Possibly\ \gamma\ at\ t\ when\ Sc$ – zapytanie, czy w chwili $t$ realizacji scenariusza $Sc$ warunek $\gamma$ zachodzi kiedykolwiek.
+\end{itemize}
 
 
 \end{document}
