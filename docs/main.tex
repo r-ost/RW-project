@@ -41,6 +41,8 @@ Rozszerzenie to polega na dodaniu warunków o dowolnej długości czasu trwania 
 \section{Język akcji}
 
 \subsection{Opis języka $\mathcal{AL}$}
+\label{sec:opis-jezyka-al}
+
 Action Language $\mathcal{AL}$ to język formalny służący do modelowania systemów dynamicznych. Pozwala na reprezentację akcji, ich efektów oraz zależności czasowych pomiędzy nimi. $\mathcal{AL}$ zakłada liniowy model czasu i umożliwia analizę konsekwencji wykonywanych działań.
 
 \subsubsection{Podstawowe założenia}
@@ -97,6 +99,7 @@ Gdzie:
 \end{itemize}
 
 \subsection{Rozszerzenie języka $\mathcal{AL}$ o durations}
+\label{sec:opis-jezyka-al-z-durations}
 
 Poza podstawowymi założeniami zdefiniowanymi w sekcji \ref{sec:opis-jezyka-al}, język akcji zaimplementowany w ramach projektu będzie zawierał dodatkowe założenie o czasie trwania akcji. Każda akcja będzie opisana parą $(A, d)$, gdzie $A$ to nazwa akcja, a $d$ to czas trwania akcji.
 \\ \\
@@ -136,7 +139,13 @@ Poniżej zostaną przedstawione możliwe zdania oraz ich zapis w w rozszerzonym 
 \end{itemize}
 
 \section{Scenariusze działań}
+Scenariuszem nazywamy parę $Sc = (Obs, Acs)$, gdzie:
+\begin{itemize}
+	\item $Obs$ to zbiór obserwacji $Obs = {(\alpha_1, t_1), ..., (\alpha_n, t_n)}$, czyli zbiór formuł $\alpha_i$, które są obserwowane w trakcie realizacji scenariusza w czasie $t_i$.
+	\item $Acs$ to zbiór akcji o określonym czasie trwania $Acs = {((A_1, d_1), t_1), ..., ((A_n, d_n), t_n)}$, które są wykonywane w trakcie realizacji scenariusza w czasie $t_i$.
+\end{itemize}
 
+\noindent Dodatkowo w scenariuszach rozważanych w projekcie mogą występować akcje nienależące do zbioru $Acs$, które są efektem wykonania innych akcji. W ramach projektu scenariusze będą definiowane w języku akcji z durations, opisanym w sekcji \ref{sec:opis-jezyka-al-z-durations}.
 
 \section{Język kwerend}
 
