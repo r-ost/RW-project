@@ -19,9 +19,6 @@ jobs:
           root_file: docs/main.tex
           compiler: pdflatex
           args: "-shell-escape -interaction=nonstopmode"
-          extra_packages: |
-            hyperref
-            bookmark
           pre_compile: |
             pdflatex -draftmode -interaction=nonstopmode docs/main.tex
           post_compile: |
