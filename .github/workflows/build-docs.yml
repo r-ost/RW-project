@@ -16,18 +16,18 @@ jobs:
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: main.tex
+          root_file: docs/main.tex
           compiler: pdflatex
           args: "-shell-escape -interaction=nonstopmode"
           extra_packages: |
             hyperref
             bookmark
           pre_compile: |
-            pdflatex -draftmode -interaction=nonstopmode main.tex
+            pdflatex -draftmode -interaction=nonstopmode docs/main.tex
           post_compile: |
-            pdflatex -interaction=nonstopmode main.tex
+            pdflatex -interaction=nonstopmode docs/main.tex
 
       - name: Upload PDF
         uses: actions/upload-artifact@v4
         with:
-          path: main.pdf
+          path: docs/main.pdf
