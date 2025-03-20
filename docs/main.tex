@@ -9,12 +9,24 @@
 \usepackage{makecell}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{tikz}
 \usepackage{float}
 \usepackage{listings}
 \usepackage[colorlinks=true, linkcolor=black]{hyperref}
 \usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
 
 \renewcommand{\familydefault}{\sfdefault}
+
+\definecolor{mygreen}{RGB}{117,167,117}
+\definecolor{myred}{RGB}{255,1,1}
+\definecolor{myblue}{RGB}{102,178,255}
+
+\newcommand\myent[3]{%
+\footnotesize%
+$\begin{array}{@{}r@{}} 
+#1 \\ #2 \\#3
+\end{array}$%
+}
 
 \setcounter{tocdepth}{2}
 
@@ -189,6 +201,165 @@ Przyjmuje się, że:
 
 \section{Przykłady}
 % TODO: Piotr
+
+\subsection{Jan pijący kawę}
+Na początku Jan jest śpiący, nie ma kawy i jest w domu.
+Gdy jest śpiący, to śpi przez 2 jednostki czasu.
+Po obudzeniu się, jeśli nie ma kawy, to typowo ją parzy.
+Po zaparzeniu kawy, typowo ją pije.
+
+\begin{enumerate}
+    \item initially sleepy, -hasCoffee, atHome
+    \item sleepy triggers Jan Sleep  
+    \item Jan Sleep causes -sleepy after 2  
+    \item typically -hasCoffee triggers Jan BrewCoffee at 2  
+    \item Jan BrewCoffee causes hasCoffee  
+    \item typically hasCoffee triggers Jan DrinkCoffee at 3  
+    \item Jan DrinkCoffee causes energetic  
+\end{enumerate}
+
+
+
+\begin{tikzpicture}[x=1.5cm]
+    \draw[mygreen,->,thick,>=latex]
+      (0,0) -- (5,0) node[below right] {$\scriptstyle t$};
+    \foreach \Xc in {0,...,4}
+    {
+      \draw[mygreen,thick] 
+        (\Xc,0) -- ++(0,5pt) node[above] {$\scriptstyle \Xc$};
+    }
+    
+    % Sleep trwa 2 jednostki czasu (0-1)
+    \fill[myred] 
+        ([xshift=5pt]0,0.25)  
+          rectangle node[above] {\strut\small Sleep} 
+        ([xshift=-5pt]2,0.35);  
+
+    % BrewCoffee w czasie 2
+    \fill[myred] 
+        ([xshift=5pt]2,0.50)  
+          rectangle node[above] {\strut\small BrewCoffee} 
+        ([xshift=-5pt]3,0.60);  
+
+    % DrinkCoffee w czasie 3
+    \fill[myred] 
+        ([xshift=5pt]3,0.75)  
+          rectangle node[above] {\strut\small DrinkCoffee} 
+        ([xshift=-5pt]4,0.85);  
+
+    \node[below,align=left,anchor=north,inner xsep=0pt,color=myred] 
+      at (0,0) 
+      {\myent{s}{\neg c}{h}};  
+    \node[below,align=left,anchor=north,inner xsep=0pt] 
+      at (1,0) 
+      {\myent{s?}{c?}{h?}};  
+    \node[below,align=left,anchor=north,inner xsep=0pt] 
+      at (2,0) 
+      {\myent{\neg s}{\color{myred}\neg c\ast}{h?}};  
+    \node[below,align=left,anchor=north,inner xsep=0pt] 
+      at (3,0) 
+      {\myent{\neg s}{\color{myred}c\ast}{h?}};  
+    \node[below,align=left,anchor=north,inner xsep=0pt] 
+      at (4,0) 
+      {\myent{\neg s}{c?}{\color{myred}e\ast}};  
+\end{tikzpicture}
+
+\subsection{Ewa czytająca książkę}
+
+Na początku Ewa jest zmęczona, nie ma książki, jest w domu i biblioteka jest zamknięta. Ewa odpoczywa przez 1 jednostkę czasu, co sprawia, że przestaje być zmęczona. Następnie, przez kolejną jednostkę czasu, pije kawę, co sprawia, że staje się energiczna. W czasie 3 biblioteka się otwiera. Jeśli Ewa nie zamówiła książki przez internet, w czasie 4 idzie do biblioteki, aby ją wypożyczyć. W czasie 5, jeśli ma książkę, zaczyna ją czyta
+
+\begin{enumerate}
+    \item initially tired, -hasBook, atHome, -atLibrary, -isLibraryOpen
+
+    \item tired triggers Ewa Rest
+    \item Ewa Rest causes -tired after 1
+    \item typically -tired triggers Ewa DrinkCoffee at 1
+    \item Ewa DrinkCoffee causes energetic
+    \item isLibraryOpen at 3
+    \item -isLibraryOpen at 6
+    \item typically -hasBook and atHome triggers Ewa GoToLibrary at 4
+    \item Ewa GoToLibrary causes -atHome, atLibrary
+    \item typically atLibrary and -hasBook triggers Ewa BorrowBook
+    \item Ewa BorrowBook causes hasBook if atLibrary, -hasBook
+    \item hasBook typically causes Ewa ReadBook at 5
+\end{enumerate}
+
+\begin{tikzpicture}[x=1.8cm]  % Zmniejszenie jednostki dla formatu A4
+    % Oś czasu
+    \draw[mygreen,->,thick,>=latex]
+      (0,0) -- (7,0) node[below right] {$\scriptstyle t$};
+    
+    % Oznaczenia czasu na osi X
+    \foreach \Xc in {0,...,6}
+    {
+      \draw[mygreen,thick] 
+        (\Xc,0) -- ++(0,5pt) node[above] {$\scriptstyle \Xc$};
+    }
+    
+    % Czynności i wydarzenia
+    % Rest w czasie 0-1
+    \fill[red] 
+        ([xshift=5pt]0,0.25)  
+          rectangle node[above, font=\small] {\strut Rest} 
+        ([xshift=-5pt]1,0.35);  
+
+    % DrinkCoffee w czasie 1-2
+    \fill[red] 
+        ([xshift=5pt]1,0.50)  
+          rectangle node[above, font=\small] {\strut DrinkCoffee} 
+        ([xshift=-5pt]2,0.60);  
+
+    % Library Opens w czasie 3
+    \node[above,align=center,scale=0.8] at (3, 0.85) {\textcolor{blue}{Library Opens}};
+
+    % GoToLibrary w czasie 4-5
+    \fill[red] 
+        ([xshift=5pt]4,1.00)  
+          rectangle node[above, font=\small] {\strut GoToLibrary} 
+        ([xshift=-5pt]5,1.10);  
+
+    % BorrowBook w czasie 5-6
+    \fill[red] 
+        ([xshift=5pt]5,1.25)  
+          rectangle node[above, font=\small] {\strut BorrowBook} 
+        ([xshift=-5pt]6,1.35);  
+
+    % ReadBook w czasie 6-7
+    \fill[red] 
+        ([xshift=5pt]6,1.50)  
+          rectangle node[above, font=\small] {\strut ReadBook} 
+        ([xshift=-5pt]7,1.60);  
+
+    % Stany prawda/fałsz w każdej jednostce czasu
+    \node[below,align=left,anchor=north,inner xsep=0pt,color=red, font=\footnotesize] 
+      at (0,0) 
+      {$t$ \\ $\neg b$ \\ $h$ \\ $\neg l$ \\ $\neg o$};  
+
+    \node[below,align=left,anchor=north,inner xsep=0pt, font=\footnotesize] 
+      at (1,0) 
+      {$t?$ \\ $b?$ \\ $h?$ \\ $l?$ \\ $o?$};  
+
+    \node[below,align=left,anchor=north,inner xsep=0pt, font=\footnotesize] 
+      at (2,0) 
+      {$\neg t$ \\ $\neg b$ \\ $h$ \\ $\neg l$ \\ $\neg o$};  
+
+    \node[below,align=left,anchor=north,inner xsep=0pt, font=\footnotesize] 
+      at (3,0) 
+      {$\neg t$ \\ $b?$ \\ $h$ \\ $\neg l$ \\ $o$};  
+
+    \node[below,align=left,anchor=north,inner xsep=0pt, font=\footnotesize] 
+      at (4,0) 
+      {$\neg t$ \\ $b?$ \\ $h$ \\ $l?$ \\ $o$};  
+
+    \node[below,align=left,anchor=north,inner xsep=0pt, font=\footnotesize] 
+      at (5,0) 
+      {$\neg t$ \\ $b$ \\ $h$ \\ $l?$ \\ $o$};  
+
+    \node[below,align=left,anchor=north,inner xsep=0pt, font=\footnotesize] 
+      at (6,0) 
+      {$\neg t$ \\ $b$ \\ $h$ \\ $l?$ \\ $\neg o$};  
+
+\end{tikzpicture}
 
 \section{Interfejs użytkownika}
 % TODO: Jan K.
